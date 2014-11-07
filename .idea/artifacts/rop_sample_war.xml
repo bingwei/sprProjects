@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="rop-sample:war">
+    <output-path>$PROJECT_DIR$/chapter10/rop-sample/target</output-path>
+    <root id="archive" name="rop-sample.war">
+      <element id="artifact" artifact-name="rop-sample:war exploded" />
+    </root>
+  </artifact>
+</component>

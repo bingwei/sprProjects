@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.1.dtd">
+<hibernate-mapping auto-import="true" default-lazy="false">
+	<class name="com.smart.domain.User" table="t_user">
+		<id name="userId" column="user_id">
+			<generator class="assigned" />
+		</id>
+		<property name="userName" column="user_name" />
+		<property name="password" column="password" />
+		<property name="lastVisit" column="last_visit" type="date" />
+		<property name="lastIp" column="last_ip" />
+	</class>
+</hibernate-mapping>

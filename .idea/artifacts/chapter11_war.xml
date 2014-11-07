@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="chapter11:war">
+    <output-path>$PROJECT_DIR$/chapter11/target</output-path>
+    <root id="archive" name="viewspace.war">
+      <element id="artifact" artifact-name="chapter11:war exploded" />
+    </root>
+  </artifact>
+</component>

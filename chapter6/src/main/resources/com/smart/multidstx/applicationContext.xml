@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+	<context:component-scan base-package="com.smart.multidstx" />
+
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	<bean id="dataSource1" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close"
+		p:driverClassName="${jdbc.driverClassName}"
+		p:url="${jdbc.url}"
+		p:username="${jdbc.username}"
+		p:password="${jdbc.password}" />
+
+    <bean id="dataSource2" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close"
+          p:driverClassName="${jdbc.driverClassName}"
+          p:url="${jdbc2.url}"
+          p:username="${jdbc2.username}"
+          p:password="${jdbc2.password}" />
+
+
+	<bean id="jdbcTemplate1" class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource1" />
+
+	<bean id="jdbcManager1"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource1" />
+
+
+    <bean id="jdbcTemplate2" class="org.springframework.jdbc.core.JdbcTemplate"
+          p:dataSource-ref="dataSource2" />
+
+    <bean id="jdbcManager2"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="dataSource2" />
+
+	<!-- 添加Spring事务增强 -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="serviceJdbcMethod" expression="within(com.smart.multidstx.BaseService+)" />
+		<aop:advisor pointcut-ref="serviceJdbcMethod" advice-ref="jdbcAdvice1"
+			order="0" />
+        <aop:advisor pointcut-ref="serviceJdbcMethod" advice-ref="jdbcAdvice2"
+                     order="1" />
+	</aop:config>
+	<tx:advice id="jdbcAdvice1" transaction-manager="jdbcManager1">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+    <tx:advice id="jdbcAdvice2" transaction-manager="jdbcManager2">
+        <tx:attributes>
+            <tx:method name="*" />
+        </tx:attributes>
+    </tx:advice>
+</beans>

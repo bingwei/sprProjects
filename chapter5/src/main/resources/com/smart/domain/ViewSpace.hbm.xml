@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.1.dtd">
+<hibernate-mapping auto-import="true" default-lazy="false">
+	<class name="com.smart.domain.ViewSpace" table="t_view_space">
+		<id name="spaceId" column="space_id">
+			<generator class="assigned" />
+		</id>
+		<property name="spaceName" column="space_name" />
+		<property name="description" column="description"  type="org.springframework.orm.hibernate3.support.ClobStringType"/>
+		<property name="website" column="website" />
+		<property name="address" column="address" />
+		<property name="wantNum" column="want_num" type="int"/>
+		<property name="beenNum" column="been_num" type="int"/>
+		<property name="notwantNum" column="notwant_num" type="int"/>
+        <many-to-one name="user" column="user_id"
+                     class="com.smart.domain.User" />
+
+        <bag name="viewPoints" inverse="true" cascade="none">
+			<key column="space_id" />
+			<one-to-many class="com.smart.domain.ViewPoint" />
+		</bag>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.1.dtd">
+<hibernate-mapping auto-import="true" default-lazy="false">
+	<class name="com.smart.domain.ViewPoint" table="t_view_point">
+		<id name="pointId" column="point_id">
+			<generator class="assigned" />
+		</id>
+		<property name="pointName" column="point_name" />
+		<property name="ticketPrice" column="ticket_price" />
+		<property name="description" column="description"  type="org.springframework.orm.hibernate3.support.ClobStringType"/>
+		<property name="imgFile" column="img_file" type="org.springframework.orm.hibernate3.support.BlobByteArrayType" />
+		<many-to-one name="viewSpace" column="space_id"
+			class="com.smart.domain.ViewSpace" />
+	</class>
+</hibernate-mapping>
